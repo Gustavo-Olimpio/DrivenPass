@@ -48,8 +48,9 @@ model Cards{
   Title String
   Number Int
   Name String
-  Cvv Int
+  Cvv String
   Date String
+  Password String
   Virtual Boolean 
   Type String
 

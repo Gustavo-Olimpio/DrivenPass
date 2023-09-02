@@ -1,22 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCardDto } from './dto/create-card.dto';
-import { UpdateCardDto } from './dto/update-card.dto';
+import { cardsRepository } from './cards.repositories';
 
 @Injectable()
 export class CardsService {
-  create(createCardDto: CreateCardDto) {
-    return 'This action adds a new card';
+  constructor(private readonly repository : cardsRepository){}
+  async create(createCardDto: CreateCardDto, userId:number) {
+    const card = await this.repository.getByTitle(createCardDto.Title);
+    if(card) throw new ConflictException()
+    return await this.repository.create(createCardDto,userId)
   }
 
-  findAll() {
-    return `This action returns all cards`;
+  async findAll(userId : number) {
+    const Cryptr = require('cryptr');
+    const cryptr = new Cryptr(process.env.JWT_SECRET);
+    const cards = this.repository.getAll(userId);
+    if(!cards) throw new NotFoundException()
+
+    const cardsAtualizadas = (await cards).map((e) => ({
+      ...e, 
+      Cvv: cryptr.decrypt(e.Cvv),
+      Password: cryptr.decrypt(e.Password) 
+    }));
+    return cardsAtualizadas
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} card`;
+  async findOne(id: number , userId: number) {
+    const card = await this.repository.getById(id)
+    if(!card) throw new NotFoundException();
+    if(card.UserId !== userId) throw new ForbiddenException();
+    const Cryptr = require('cryptr');
+    const cryptr = new Cryptr(process.env.JWT_SECRET);
+    card.Cvv = cryptr.decrypt(card.Cvv) 
+    card.Password = cryptr.decrypt(card.Password) 
+    return card
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} card`;
+  async remove(id: number, userId: number) {
+    const card = await this.repository.getById(id)
+    if(!card) throw new NotFoundException();
+    if(card.UserId !== userId) throw new ForbiddenException();
+    return await this.repository.deleteById(id);
   }
 }
