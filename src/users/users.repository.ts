@@ -29,5 +29,11 @@ export class usersRepository {
             }
         })
     }
+    async erase(userId:number){
+        await this.prisma.cards.deleteMany({where:{UserId:userId}})
+        await this.prisma.credentials.deleteMany({where:{UserId:userId}})
+        await this.prisma.notes.deleteMany({where:{UserId:userId}})
+        await this.prisma.users.delete({where:{id:userId}})
+    }
 
 }

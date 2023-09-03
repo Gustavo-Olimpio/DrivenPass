@@ -37,10 +37,11 @@ export class cardsRepository {
         })
 
     }
-    async getByTitle(title : string){
+    async getByTitle(title : string, UserId:number){
         return await this.prisma.cards.findFirst({
             where: {
-                Title:title
+                Title:title,
+                UserId
             }
         })
     }

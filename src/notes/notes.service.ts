@@ -7,7 +7,7 @@ import { notesRepository } from './notes.repository';
 export class NotesService {
   constructor(private readonly repository : notesRepository){}
   async create(createNoteDto: CreateNoteDto, userId: number) {
-    const note = await this.repository.getByTitle(createNoteDto.Title)
+    const note = await this.repository.getByTitle(createNoteDto.Title,userId)
     if(note) throw new ConflictException()
     return await this.repository.create(createNoteDto,userId);
   }

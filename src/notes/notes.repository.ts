@@ -28,10 +28,12 @@ export class notesRepository {
             }
         })
     }
-    async getByTitle(title : string){
+    async getByTitle(title : string, UserId:number){
         return await this.prisma.notes.findFirst({
             where :{
-                Title: title
+                Title: title,
+                UserId
+
             }
         })
     }

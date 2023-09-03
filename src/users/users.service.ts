@@ -5,6 +5,7 @@ import * as bcrypt from "bcrypt";
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { NotFoundError } from 'rxjs';
+import { EraseDto } from './dto/erase.dto';
 
 @Injectable()
 export class UsersService {
@@ -51,5 +52,12 @@ export class UsersService {
       issuer:"Driven"
     })
     return data
+  }
+  async erase(userId:number, body : EraseDto){
+    const {password} = body
+    const user = await this.repository.getUserById(userId)
+    const validPassword = await bcrypt.compare(password,user.password)
+    if (!validPassword) throw new UnauthorizedException()
+    return await this.repository.erase(userId)
   }
 }

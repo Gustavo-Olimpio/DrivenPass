@@ -6,7 +6,7 @@ import { cardsRepository } from './cards.repositories';
 export class CardsService {
   constructor(private readonly repository : cardsRepository){}
   async create(createCardDto: CreateCardDto, userId:number) {
-    const card = await this.repository.getByTitle(createCardDto.Title);
+    const card = await this.repository.getByTitle(createCardDto.Title,userId);
     if(card) throw new ConflictException()
     return await this.repository.create(createCardDto,userId)
   }

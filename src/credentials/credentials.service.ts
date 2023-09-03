@@ -8,7 +8,7 @@ export class CredentialsService {
   constructor(private readonly repository: credentialsRepository){};
   
   async create(createCredentialDto: CreateCredentialDto,id : number) {
-    const cred = await this.repository.searchByTitle(createCredentialDto.Title)
+    const cred = await this.repository.searchByTitle(createCredentialDto.Title,id)
     if(cred) throw new ConflictException()
     return await this.repository.create(createCredentialDto,id);
   }

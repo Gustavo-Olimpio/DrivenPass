@@ -18,10 +18,11 @@ export class credentialsRepository {
             }
         })
     }
-    async searchByTitle(Title : string){
+    async searchByTitle(Title : string, UserId : number){
         return await this.prisma.credentials.findFirst({
             where : {
-                Title
+                Title,
+                UserId
             }
         })
     }
