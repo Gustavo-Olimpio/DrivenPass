@@ -455,6 +455,30 @@ describe('AppController (e2e)', () => {
             .expect(HttpStatus.OK);
         })
       });
+      describe('/ERASE ', () => {
+        it('401 when password is incorrect', async () => {
+          const user = await createUsers()
+          const token = await service.login({ email: user.email, password: '123456789Aa!' })
+          return await request(app.getHttpServer())
+            .post(`/erase`)
+            .set('Authorization', `Bearer ${token.token}`)
+            .send({
+              password:'IncorrectPassword'
+            })
+            .expect(HttpStatus.UNAUTHORIZED);
+        })
+        it('200 when everything is correct', async () => {
+          const user = await createUsers()
+          const token = await service.login({ email: user.email, password: '123456789Aa!' })
+          return await request(app.getHttpServer())
+            .post(`/erase`)
+            .set('Authorization', `Bearer ${token.token}`)
+            .send({
+              password:'123456789Aa!'
+            })
+            .expect(HttpStatus.CREATED);
+        })
+      });
   });
   });
 });
