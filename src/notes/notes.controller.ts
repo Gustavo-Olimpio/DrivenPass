@@ -2,7 +2,9 @@ import { Request ,Controller, Get, Post, Body, Patch, Param, Delete, UseGuards }
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('notes')
 @UseGuards(AuthGuard)
 @Controller('notes')
 export class NotesController {

@@ -2,8 +2,9 @@ import { Controller, Get, Post, Body,Param, Delete, UseGuards,Request } from '@n
 import { CredentialsService } from './credentials.service';
 import { CreateCredentialDto } from './dto/create-credential.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('credentials')
 @UseGuards(AuthGuard)
 @Controller('credentials')
 export class CredentialsController {

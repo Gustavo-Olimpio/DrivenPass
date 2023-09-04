@@ -2,7 +2,9 @@ import { Request,Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } 
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('cards')
 @UseGuards(AuthGuard)
 @Controller('cards')
 export class CardsController {
