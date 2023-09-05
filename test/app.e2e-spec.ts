@@ -390,7 +390,7 @@ describe('AppController (e2e)', () => {
             .get(`/cards/1`)
             .expect(HttpStatus.UNAUTHORIZED);
         })
-        it('403 when note is from another person', async () => {
+        it('403 when card is from another person', async () => {
           const user = await createUsers()
           const user2 = await createUsers()
           const token = await service.login({ email: user.email, password: '123456789Aa!' })
@@ -400,7 +400,7 @@ describe('AppController (e2e)', () => {
             .set('Authorization', `Bearer ${token.token}`)
             .expect(HttpStatus.FORBIDDEN);
         })
-        it('404 when note is not exists', async () => {
+        it('404 when card is not exists', async () => {
           const user = await createUsers()
           const token = await service.login({ email: user.email, password: '123456789Aa!' })
           return await request(app.getHttpServer())

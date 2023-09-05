@@ -4,7 +4,6 @@ import { usersRepository } from './users.repository';
 import * as bcrypt from "bcrypt";
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { NotFoundError } from 'rxjs';
 import { EraseDto } from './dto/erase.dto';
 
 @Injectable()
