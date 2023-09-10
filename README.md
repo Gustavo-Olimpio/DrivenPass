@@ -55,7 +55,7 @@ Junte-se a nós no DrivenPass e transforme a maneira como você protege suas inf
 
 - **Recuperação de Senha:** Implementando um processo seguro de recuperação de senha, permitindo que os usuários redefinam suas senhas com segurança caso as esqueçam.
 
-- **Geração de Senhas Seguras:** Criar a capacidade de gerar senhas seguras aleatórias, ajudando os usuários a criar senhas fortes para contas online.- 
+- **Geração de Senhas Seguras:** Criar a capacidade de gerar senhas seguras aleatórias, ajudando os usuários a criar senhas fortes para contas online.
 
 
 ## Tecnologias
